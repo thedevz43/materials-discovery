@@ -51,7 +51,6 @@ def eval_epoch(model, loader, device, return_preds=False):
 
     mae = mean_absolute_error(targets, preds)
     rmse = np.sqrt(mean_squared_error(targets, preds))
-
     if return_preds:
         return mae, rmse, preds, targets
     return mae, rmse

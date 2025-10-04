@@ -7,7 +7,7 @@ class CGCNN(nn.Module):
     """
     Crystal Graph Convolutional Neural Network baseline.
     """
-    def __init__(self, node_dim=3, edge_dim=32, hidden_dim=128, out_dim=3, num_layers=3):
+    def __init__(self, node_dim=3, edge_dim=32, hidden_dim=128, out_dim=1, num_layers=3):
         super().__init__()
         self.conv1 = CGConv(node_dim, edge_dim, aggr='add')
         self.node_proj = nn.Linear(node_dim, hidden_dim)
@@ -15,7 +15,7 @@ class CGCNN(nn.Module):
             CGConv(hidden_dim, edge_dim, aggr='add') for _ in range(num_layers - 1)
         ])
         self.fc1 = nn.Linear(hidden_dim, hidden_dim)
-        self.fc2 = nn.Linear(hidden_dim, out_dim)  # Output vector for multi-target prediction
+        self.fc2 = nn.Linear(hidden_dim, out_dim)
 
     def forward(self, data):
         x, edge_index, edge_attr, batch = data.x, data.edge_index, data.edge_attr, data.batch
